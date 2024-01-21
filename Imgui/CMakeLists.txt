@@ -142,6 +142,8 @@ set_target_properties(Diligent-Imgui PROPERTIES
     FOLDER DiligentTools
 )
 
+target_compile_definitions(Diligent-Imgui PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
+
 if(DILIGENT_INSTALL_TOOLS)
     install_tools_lib(Diligent-Imgui)
 endif()
