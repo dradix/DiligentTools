@@ -23,7 +23,7 @@
 
 #include "imgui.h"
 #include "ImGuiImplMacOS.hpp"
-#include "../../ThirdParty/imgui_v1.85/imgui_impl_osx_v1.85.h"
+#include "../../ThirdParty/imgui/backends/imgui_impl_osx.h"
 #import <Cocoa/Cocoa.h>
 
 namespace Diligent
@@ -37,7 +37,7 @@ std::unique_ptr<ImGuiImplMacOS> ImGuiImplMacOS::Create(const ImGuiDiligentCreate
 ImGuiImplMacOS::ImGuiImplMacOS(const ImGuiDiligentCreateInfo& CI, void* _Nullable view) :
     ImGuiImplDiligent{CI}
 {
-    ImGui_ImplOSX_Init();
+    ImGui_ImplOSX_Init((NSView*)view);
     ImGuiIO& io = ImGui::GetIO();
     io.BackendPlatformName = "Diligent-ImGuiImplMacOS";
 
@@ -74,7 +74,9 @@ bool ImGuiImplMacOS::HandleOSXEvent(NSEvent *_Nonnull event, NSView *_Nonnull vi
         return io.WantCaptureMouse;
     }
 
-    return ImGui_ImplOSX_HandleEvent((NSEvent*)event, (NSView*)view);
+    // In newer ImGui backends, events are handled automatically by the view system
+    // We just return false to indicate we didn't handle the event manually
+    return false;
 }
 
 void ImGuiImplMacOS::Render(IDeviceContext* pCtx)

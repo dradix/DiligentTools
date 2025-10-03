@@ -80,12 +80,8 @@ else()
         list(APPEND DEAR_IMGUI_SOURCE ${DILIGENT_DEAR_IMGUI_PATH}/backends/imgui_impl_win32.cpp)
         list(APPEND DEAR_IMGUI_INCLUDE ${DILIGENT_DEAR_IMGUI_PATH}/backends/imgui_impl_win32.h)
     elseif(PLATFORM_MACOS)
-        set(DEAR_IMGUI_V185_SOURCE
-            ../ThirdParty/imgui_v1.85/imgui_impl_osx_v1.85.mm
-            ../ThirdParty/imgui_v1.85/imgui_impl_osx_v1.85.h
-        )
-        target_sources(Diligent-Imgui PRIVATE ${DEAR_IMGUI_V185_SOURCE})
-        source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/imgui_v1.85 PREFIX "dear_imgui_v1.85" FILES ${DEAR_IMGUI_V185_SOURCE})
+        list(APPEND DEAR_IMGUI_SOURCE ${DILIGENT_DEAR_IMGUI_PATH}/backends/imgui_impl_osx.mm)
+        list(APPEND DEAR_IMGUI_INCLUDE ${DILIGENT_DEAR_IMGUI_PATH}/backends/imgui_impl_osx.h)
     endif()
 
     target_sources(Diligent-Imgui PRIVATE
@@ -121,6 +117,11 @@ if(PLATFORM_WIN32 AND MINGW_BUILD)
     # '#pragma comment(lib, "dwmapi")'
     # when compiler is not MSVC
     target_link_libraries(Diligent-Imgui PRIVATE dwmapi.lib)
+endif()
+
+if(PLATFORM_MACOS)
+    # Link GameController framework required by newer imgui_impl_osx.mm
+    target_link_libraries(Diligent-Imgui PRIVATE "-framework GameController")
 endif()
 
 source_group("src" FILES ${SOURCE})
