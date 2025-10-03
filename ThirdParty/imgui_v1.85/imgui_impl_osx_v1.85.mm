@@ -123,7 +123,7 @@ bool ImGui_ImplOSX_Init()
     io.KeyMap[ImGuiKey_Space]           = 32;
     io.KeyMap[ImGuiKey_Enter]           = 13;
     io.KeyMap[ImGuiKey_Escape]          = 27;
-    io.KeyMap[ImGuiKey_KeyPadEnter]     = 3;
+    io.KeyMap[ImGuiKey_KeypadEnter]     = 3;
     io.KeyMap[ImGuiKey_A]               = 'A';
     io.KeyMap[ImGuiKey_C]               = 'C';
     io.KeyMap[ImGuiKey_V]               = 'V';
